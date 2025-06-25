@@ -1,7 +1,12 @@
 import { useState } from "react";
 import "./ChatWidget.css";
 
-const ChatWidget = () => {
+const ChatWidget = ({
+  position = "bottom-right",
+  theme = "light",
+  avatar = null,
+  welcomeMessage = "Hello! How can I help you?",
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
