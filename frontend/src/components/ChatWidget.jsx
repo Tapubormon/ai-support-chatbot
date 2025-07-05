@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./ChatWidget.css";
+import chatIcon from '../assets/chat.png';
+import chatMinus from '../assets/minus.png';
+import chatCross from '../assets/cross.png';
 
 const ChatWidget = ({
   position = "bottom-right",
@@ -43,39 +46,47 @@ const ChatWidget = ({
     if (e.key === "Enter") sendMessage();
   };
 
-  return (
-    <div className="chat-widget">
+return (
+  <div className="chat-widget">
+    {!isOpen && (
       <button className="chat-toggle" onClick={toggleChat}>
-        {isOpen ? "×" : "💬"}
+        <img src={chatIcon} alt="Chat" className="chaticon" />
       </button>
+    )}
 
-      {isOpen && (
-        <div className="chat-box">
-          <div className="chat-messages">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`chat-message ${msg.from === "user" ? "user" : "bot"}`}
-              >
-                {msg.text}
-              </div>
-            ))}
-          </div>
-
-          <div className="chat-input">
-            <input
-              type="text"
-              value={input}
-              placeholder="Ask me something..."
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyPress}
-            />
-            <button onClick={sendMessage}>Send</button>
-          </div>
+    {isOpen && (
+      <div className="chat-box">
+        <div className="chat-top-bar">
+          <img src={chatMinus} alt="Minimize" onClick={toggleChat} />
+          <img src={chatCross} alt="Close" onClick={toggleChat} />
         </div>
-      )}
-    </div>
-  );
+
+        <div className="chat-messages">
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`chat-message ${msg.from === "user" ? "user" : "bot"}`}
+            >
+              {msg.text}
+            </div>
+          ))}
+        </div>
+
+        <div className="chat-input">
+          <input
+            type="text"
+            value={input}
+            placeholder="Ask me something..."
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyPress}
+          />
+          <button onClick={sendMessage}>Send</button>
+        </div>
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default ChatWidget;
